@@ -5,6 +5,13 @@ struct Person:
     favorite_number: uint256
     name: String[100]
 
+struct Person_id:
+    name: String[100]
+    index: address
+
+
+
+
 my_favorite_number: public(uint256)
 list_of_numbers: public(uint256[5])
 list_of_people: public(Person[5])
@@ -22,11 +29,18 @@ def __init__():
 def store(new_number: uint256):
     self.my_favorite_number = new_number
 
+@external
+def add() -> uint256:
+    return self.my_favorite_number + 1
 
 @external
 @view
 def retrieve() -> uint256:
-    return self.my_favorite_number
+    if self.my_favorite_number == 7:
+        return self.my_favorite_number
+    else :
+        return 0
+
 
 @external
 def add_person(favorite_number: uint256, name: String[100]):
@@ -35,3 +49,7 @@ def add_person(favorite_number: uint256, name: String[100]):
     self.list_of_people[self.index] = new_person
     self.name_to_favorite_number[name] = favorite_number
     self.index +=1
+
+@external
+def ad_id(name:String[100], index: address):
+    new_id:Person_id= Person_id(name= name, index= msg.sender) 
